@@ -75,14 +75,17 @@ chart_data = pd.DataFrame({"minute": range(60), "crashes": hist})
 fig = px.bar(chart_data, x='minute', y='crashes', hover_data=['minute', 'crashes'], height=400)
 st.write(fig)
 
-st.header("Top 5 dangerous streets by affected class")
+st.header("Top 10 dangerous streets by affected class")
 select = st.selectbox('Affected class', ['Pedestrians', 'Cyclists', 'Motorists'])
 
 if select == 'Pedestrians':
     st.write(original_data.query("injured_pedestrians >= 1")[["on_street_name", "injured_pedestrians"]].sort_values(by=['injured_pedestrians'], ascending=False).dropna(how="any")[:5])
+    st.write(original_data.query("killed_pedestrians >= 1")[["on_street_name", "killed_pedestrians"]].sort_values(by=['killed_pedestrians'], ascending=False).dropna(how="any")[:5])
 
 elif select == 'Cyclists':
     st.write(original_data.query("injured_cyclists >= 1")[["on_street_name", "injured_cyclists"]].sort_values(by=['injured_cyclists'], ascending=False).dropna(how="any")[:5])
+    st.write(original_data.query("killed_cyclists >= 1")[["on_street_name", "killed_cyclists"]].sort_values(by=['killed_cyclists'], ascending=False).dropna(how="any")[:5])
 
 else:
     st.write(original_data.query("injured_motorists >= 1")[["on_street_name", "injured_motorists"]].sort_values(by=['injured_motorists'], ascending=False).dropna(how="any")[:5])
+    st.write(original_data.query("killed_motorists >= 1")[["on_street_name", "killed_motorists"]].sort_values(by=['killed_motorists'], ascending=False).dropna(how="any")[:5])
